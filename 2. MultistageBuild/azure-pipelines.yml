@@ -1,0 +1,34 @@
+name: 1.0$(Rev:.r)
+
+trigger:
+  branches: 
+    include:
+      - master
+  paths:
+    include:
+    - MultistageBuild/*      
+
+variables:
+  imageName: 'multistagebuild:$(build.buildNumber)'
+
+pool:
+  name: 'Local'
+
+steps:
+- task: PowerShell@2
+  displayName: 'docker build'
+  inputs:
+    targetType: 'inline'
+    script: 'docker build -f Dockerfile -t $(imageName) .;
+            docker create --name publishedcontainer multistagebuild:$(build.buildNumber);
+            docker cp publishedcontainer:/app ./app'
+    workingDirectory: 2. MultistageBuild
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '2. MultistageBuild/app'
+    ArtifactName: 'drop'
+
+  
+  
+

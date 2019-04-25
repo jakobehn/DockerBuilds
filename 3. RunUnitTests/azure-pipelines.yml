@@ -1,0 +1,43 @@
+name: 1.0$(Rev:.r)
+
+trigger:
+  branches: 
+    include:
+      - master
+  paths:
+    include:
+    - 3.RunUnitTests/*    
+
+pool:
+  name: 'Local'
+
+steps:
+- script: docker build -f Dockerfile -t app:$(build.buildNumber) . --build-arg cachebust=$(build.buildId)
+  displayName: 'docker build'
+  continueOnError: true
+  workingDirectory: 3. RunUnitTests
+
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: '$id=docker images --filter "label=test=true" -q | Select-Object -First 1;
+            docker create --name testcontainer $id;
+            docker cp testcontainer:/testresults ./testresults;
+            docker rm testcontainer'
+  displayName: 'Get test results'
+ 
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'VSTest'
+    testResultsFiles: '**/test*.xml'
+    searchFolder: '$(System.DefaultWorkingDirectory)/testresults'
+    publishRunAttachments: true
+  displayName: 'Publish test results'  
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'cobertura'
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/testresults/coverage/coverage.cobertura.xml'
+    reportDirectory: '$(System.DefaultWorkingDirectory)/testresults/coverage/reports'
+  displayName: 'Publish coverage reports'  
+

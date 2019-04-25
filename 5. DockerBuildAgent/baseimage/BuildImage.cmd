@@ -1,0 +1,1 @@
+docker build -t buildagentbase:sqlexpress-windowsservercore-ltsc2019 -m 8G .

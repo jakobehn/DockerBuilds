@@ -1,0 +1,48 @@
+queue:
+  name: Default
+  timeoutInMinutes: 120
+
+name: 1.2$(Rev:.r)
+
+steps:
+- task: Docker@1
+  displayName: login
+  inputs:
+    containerregistrytype: 'Container Registry'
+    dockerRegistryEndpoint: mfexbuilddev
+    command: login
+
+- script: docker build -t mfexsqlbase:sqlexpress-windowsservercore-ltsc2019 .
+  displayName: Build base image
+  workingDirectory: wscore-sqlexpress
+
+- script: docker build -m 8G -t mfexbuildtools-2019 .
+  displayName: Build mfexbuildtools image
+  workingDirectory: mfexbuildtools
+
+- script: docker build -m 8G -t mfexbuilddev.azurecr.io/mfexbuildagent-2019:$(Build.BuildNumber) --build-arg BuildNumber=$(Build.BuildNumber) .
+  displayName: Build mfexbuildagent image
+  workingDirectory: mfexbuildagent
+      
+
+- task: Docker@0
+  displayName: 'Push mfexbuildagent-2019:$(Build.BuildNumber) to ACR'
+  inputs:
+    containerregistrytype: 'Container Registry'
+    dockerRegistryConnection: mfexbuilddev
+    action: 'Push an image'
+    imageName: 'mfexbuildagent-2019:$(Build.BuildNumber)'
+
+
+- task: CopyFiles@2
+  displayName: 'Copy Deployment Scripts'
+  inputs:
+    Contents: |
+     docker-compose.yml
+     .env
+    TargetFolder: '$(build.artifactstagingdirectory)'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Deployment Scripts'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'

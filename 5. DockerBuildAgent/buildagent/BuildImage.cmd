@@ -1,0 +1,1 @@
+docker build -t buildagent -m 8GB .

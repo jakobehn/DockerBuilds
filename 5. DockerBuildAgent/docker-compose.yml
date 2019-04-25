@@ -1,0 +1,53 @@
+version: '2.4'
+services:
+  agent1:
+    image: ${IMAGE}:${VERSION}
+    volumes:
+      - source: \\.\pipe\docker_engine
+        target: \\.\pipe\docker_engine
+        type: npipe
+    env_file: .env
+    environment:
+      TFS_AGENT_NAME: ${AGENTNAME}-1
+    storage_opt:
+      size: '${STORAGESIZE}'      
+    restart: always      
+
+  agent2:
+    image: ${IMAGE}:${VERSION}
+    volumes:
+      - source: \\.\pipe\docker_engine
+        target: \\.\pipe\docker_engine
+        type: npipe
+    env_file: .env
+    environment:
+      TFS_AGENT_NAME: ${AGENTNAME}-2
+    storage_opt:
+      size: '${STORAGESIZE}'    
+    restart: always            
+
+  agent3:
+    image: ${IMAGE}:${VERSION}
+    volumes:
+      - source: \\.\pipe\docker_engine
+        target: \\.\pipe\docker_engine
+        type: npipe
+    env_file: .env
+    environment:
+      TFS_AGENT_NAME: ${AGENTNAME}-3
+    storage_opt:
+      size: '${STORAGESIZE}'  
+    restart: always            
+                
+  agent4:
+    image: ${IMAGE}:${VERSION}
+    volumes:
+      - source: \\.\pipe\docker_engine
+        target: \\.\pipe\docker_engine
+        type: npipe
+    env_file: .env
+    environment:
+      TFS_AGENT_NAME: ${AGENTNAME}-4
+    storage_opt:
+      size: '${STORAGESIZE}'            
+    restart: always            
