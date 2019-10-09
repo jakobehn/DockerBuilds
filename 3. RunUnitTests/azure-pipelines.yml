@@ -6,7 +6,7 @@ trigger:
       - master
   paths:
     include:
-    - 3.RunUnitTests/*    
+    - "3. RunUnitTests/*"
 
 pool:
   name: 'Local'
@@ -32,6 +32,7 @@ steps:
     testResultsFiles: '**/test*.xml'
     searchFolder: '$(System.DefaultWorkingDirectory)/testresults'
     publishRunAttachments: true
+    failTaskOnFailedTests: true    
   displayName: 'Publish test results'  
 
 - task: PublishCodeCoverageResults@1
