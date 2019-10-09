@@ -6,7 +6,7 @@ trigger:
       - master
   paths:
     include:
-    - 3.RunUnitTests/*    
+    - "3. RunUnitTests/*"
 
 pool:
   name: 'Local'

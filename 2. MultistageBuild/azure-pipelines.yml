@@ -6,7 +6,7 @@ trigger:
       - master
   paths:
     include:
-    - MultistageBuild/*      
+    - "2. MultistageBuild/*"
 
 variables:
   imageName: 'multistagebuild:$(build.buildNumber)'
