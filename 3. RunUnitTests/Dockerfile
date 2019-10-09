@@ -20,7 +20,7 @@ LABEL test=true
 
 # run the test and collect code coverage
 ARG cachebust=1
-RUN dotnet test --results-directory /testresults --logger "trx;LogFileName=test_results.xml" /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=/testresults/coverage/  UnitTests/UnitTests.csproj
+RUN dotnet test --results-directory /testresults --logger "trx;LogFileName=test_results.xml" /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=/testresults/coverage/  UnitTests/UnitTests.csproj; exit 0
 
 # generate html reports using report generator tool
 RUN dotnet tool install dotnet-reportgenerator-globaltool --version 4.0.6 --tool-path /tools
