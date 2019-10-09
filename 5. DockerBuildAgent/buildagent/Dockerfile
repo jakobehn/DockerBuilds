@@ -1,5 +1,4 @@
 # escape=`
-#FROM mfexsqlbase:sqlexpress-windowsservercore-ltsc2019
 FROM buildagentbase:sqlexpress-windowsservercore-ltsc2019
 
 ###################################################################
