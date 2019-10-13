@@ -20,7 +20,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: 'docker build -f Dockerfile -t $(imageName) .;
-            docker create --name publishedcontainer multistagebuild:$(build.buildNumber);
+            docker create --name publishedcontainer $(imageName);
             docker cp publishedcontainer:/app ./app'
     workingDirectory: 2. MultistageBuild
 
