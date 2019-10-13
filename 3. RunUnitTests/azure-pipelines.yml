@@ -29,10 +29,9 @@ steps:
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'VSTest'
-    testResultsFiles: '**/test*.xml'
+    testResultsFiles: '**/*.xml'
     searchFolder: '$(System.DefaultWorkingDirectory)/testresults'
-    publishRunAttachments: true
-    failTaskOnFailedTests: true    
+    publishRunAttachments: true  
   displayName: 'Publish test results'  
 
 - task: PublishCodeCoverageResults@1
