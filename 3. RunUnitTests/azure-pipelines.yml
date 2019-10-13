@@ -22,7 +22,7 @@ steps:
     targetType: 'inline'
     script: '$id=docker images --filter "label=test=true" -q | Select-Object -First 1;
             docker create --name testcontainer $id;
-            docker cp testcontainer:/src/UnitTests/testresults /testresults;
+            docker cp testcontainer:/src/UnitTests/testresults $(System.DefaultWorkingDirectory)/testresults;
             docker rm testcontainer'
   displayName: 'Get test results'
  
