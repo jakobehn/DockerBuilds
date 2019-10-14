@@ -8,10 +8,10 @@ WORKDIR /src
 # RUN wget -qO- https://raw.githubusercontent.com/Microsoft/artifacts-credprovider/master/helpers/installcredprovider.sh | bash
 # ENV NUGET_CREDENTIALPROVIDER_SESSIONTOKENCACHE_ENABLED true
 # ENV VSS_NUGET_EXTERNAL_FEED_ENDPOINTS "{\"endpointCredentials\": [{\"endpoint\":\"https://pkgs.dev.azure.com/jakob/_packaging/NDCSydney/nuget/v3/index.json\", \"password\":\"${PAT}\"}]}"
-
+# ENV DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER 0
 
 COPY ["WebApplication1/WebApplication1.csproj", "WebApplication1/"]
-RUN dotnet restore -s "https://pkgs.dev.azure.com/jakob/_packaging/NDCSydney/nuget/v3/index.json" -s "https://api.nuget.org/v3/index.json" "WebApplication1/WebApplication1.csproj"
+RUN dotnet restore "WebApplication1/WebApplication1.csproj"
 
 # dotnet build and publish
 COPY . .
