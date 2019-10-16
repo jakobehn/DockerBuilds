@@ -1,8 +1,7 @@
 trigger:
 - master
 
-pool:
-  name: Local
+pool: Local
   
 resources:
 - repo: self
