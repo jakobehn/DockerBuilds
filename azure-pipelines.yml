@@ -1,7 +1,5 @@
 trigger:
 - master
-
-pool: Local
   
 resources:
 - repo: self
@@ -15,8 +13,7 @@ stages:
   jobs:  
   - job: Build
     displayName: Build
-    pool:
-      vmImage: 'ubuntu-latest'
+    pool: Local
     steps:
     - task: Docker@2
       displayName: Build an image
