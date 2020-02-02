@@ -58,7 +58,6 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 
 # Install Chocolatey, WebDeploy, NuGet, MSBuild Data Tools
 RUN Install-PackageProvider -Name chocolatey -RequiredVersion 2.8.5.130 -Force; `
-    Install-Package -Name webdeploy -RequiredVersion 3.6.0 -Force; `
     Install-Package nuget.commandline -RequiredVersion 4.9.2 -Force; `
     & C:\Chocolatey\bin\nuget install Microsoft.Data.Tools.Msbuild -Version 10.0.61804.210
 
