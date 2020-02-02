@@ -29,7 +29,7 @@ steps:
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'VSTest'
-    testResultsFiles: 'test_results.xml'
+    testResultsFiles: 'test_results*.xml'
     searchFolder: '$(System.DefaultWorkingDirectory)/testresults'
     publishRunAttachments: true  
   displayName: 'Publish test results'  
