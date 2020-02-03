@@ -7,7 +7,6 @@ RUN dotnet restore "DockerbuildDemo.csproj"
 
 COPY . .
 RUN dotnet build "DockerbuildDemo.csproj" -c Release -o /app
-
 RUN dotnet publish "DockerbuildDemo.csproj" -c Release -o /app
 
 # Runtime
